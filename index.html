@@ -131,21 +131,77 @@ section{padding:clamp(80px,10vw,140px) 0}
 .hero-index li:last-child a{border-right:0}
 .hero-index a:hover{background:rgba(184,144,63,.28)}
 .hero-index .t{display:block;font:500 22px/1.2 var(--display)}
-.hero-index .m{display:block;font:700 13px var(--ml);color:var(--gold-lt);margin-top:2px}
+.hero-index .m{display:block;font:500 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-lt);margin-top:4px}
 @media (max-width:980px){.hero-index ul{grid-template-columns:repeat(3,1fr)}.hero-index a{border-bottom:1px solid rgba(255,255,255,.12)}.slide-dots{display:none}}
 @media (max-width:520px){.hero-index ul{grid-template-columns:repeat(2,1fr)}.hero-index a{padding:14px}}
 
-/* ================= INTRO ================= */
-.intro .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,110px);align-items:center}
-.intro-photos{position:relative;aspect-ratio:1/1.05}
-.intro-photos .p1,.intro-photos .p2{position:absolute;overflow:hidden;background:var(--paper-2)}
-.intro-photos .p1{inset:0 22% 18% 0}
-.intro-photos .p2{inset:auto 0 0 auto;width:52%;aspect-ratio:3/4;border:10px solid var(--paper)}
-.intro-photos img{width:100%;height:100%;object-fit:cover}
-.intro-photos .badge{position:absolute;left:6%;bottom:4%;background:var(--maroon);color:var(--on-dark);padding:22px 26px;max-width:220px}
-.intro-photos .badge b{display:block;font:500 58px/1 var(--display);color:var(--gold-lt)}
-.intro-photos .badge span{font-size:13px}
-.intro p{color:#111111;font-weight:400;max-width:52ch}
+/* ================= ABOUT: editorial collage ================= */
+.intro{position:relative;overflow:hidden;background:var(--paper)}
+.intro .bigword{position:absolute;left:50%;top:clamp(30px,4vw,60px);transform:translateX(-50%);font:600 clamp(90px,15vw,240px)/1 var(--display);letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(184,144,63,.28);white-space:nowrap;pointer-events:none;user-select:none}
+.intro .wrap{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(48px,7vw,110px);align-items:center}
+/* ---- About: "A life, in frames" ---- */
+.life{position:relative}
+.life-stage{position:relative;aspect-ratio:1/1.02;isolation:isolate}
+.life-stage::before{content:"";position:absolute;inset:8% 6% 4%;border-radius:50%;background:radial-gradient(closest-side,rgba(184,144,63,.22),transparent);filter:blur(10px);z-index:-1}
+.life-sway{position:absolute;inset:0}
+@media (prefers-reduced-motion:no-preference){.life-sway{animation:sway 9s ease-in-out infinite}@keyframes sway{0%,100%{transform:rotate(-.6deg) translateY(0)}50%{transform:rotate(.6deg) translateY(-6px)}}}
+.print{position:absolute;left:11%;top:4%;width:78%;background:#fff;padding:12px 12px 70px;box-shadow:0 2px 4px rgba(0,0,0,.08),0 24px 50px rgba(42,14,16,.22);
+  transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));transform-origin:50% 50%;opacity:0;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .6s,filter .6s}
+.print .ph{position:relative;aspect-ratio:1/.92;overflow:hidden;background:var(--fb,#3A1214)}
+.print .ph img{width:100%;height:100%;object-fit:cover}
+.print .cap{position:absolute;left:0;right:0;bottom:12px;text-align:center}
+.print .cap b{display:block;font:400 32px/1 var(--script);color:#241615}
+.print .cap small{display:block;margin-top:6px;font:500 10.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.print.past{opacity:1;filter:brightness(.96)}
+.print.past.far{opacity:0}
+.print.now{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .print.now{animation:drop 1.15s cubic-bezier(.25,.8,.25,1) both}
+  @keyframes drop{
+    0%{opacity:0;transform:translate(calc(var(--x,0px) + 40px),-70px) rotate(calc(var(--r,0deg) + 14deg)) scale(1.12);box-shadow:0 60px 90px rgba(42,14,16,.25)}
+    55%{opacity:1;transform:translate(var(--x,0),6px) rotate(calc(var(--r,0deg) - 2deg)) scale(.99)}
+    78%{transform:translate(var(--x,0),-3px) rotate(calc(var(--r,0deg) + .8deg)) scale(1.005)}
+    100%{opacity:1;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg)) scale(1)}}
+  .print.now .ph img{animation:develop 2.2s .35s ease-out both,breathe 6s 2.4s ease-in-out infinite alternate}
+  @keyframes develop{0%{filter:sepia(1) brightness(.35) contrast(1.4) blur(5px)}60%{filter:sepia(.4) brightness(.9) blur(1px)}100%{filter:none}}
+  @keyframes breathe{from{transform:scale(1)}to{transform:scale(1.07) translate(-1%,-1%)}}
+  .print.now .cap{animation:capIn .8s 1.2s both}
+  @keyframes capIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}
+.life-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:50}
+.life.snap .life-flash{animation:lflash .5s ease-out}
+@keyframes lflash{0%{opacity:.6}100%{opacity:0}}
+.life-chapter{position:absolute;z-index:40;left:0;top:10%;background:var(--maroon);color:#fff;padding:14px 18px;box-shadow:0 14px 30px rgba(42,14,16,.3);text-align:center;min-width:96px}
+.life-chapter small{display:block;font:500 10px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lt)}
+.life-chapter b{display:block;font:600 40px/1 var(--display)}
+.life-chapter span{display:block;font:500 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+/* finale: all six prints fan out like an album */
+.life-stage.fan .print{opacity:1!important;filter:none;animation:none;transform-origin:50% 175%;transform:translateY(-58%) rotate(calc((var(--i) - 2.5) * 9deg)) scale(.58);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) calc(var(--i) * 70ms),opacity .4s}
+.life-stage.fan .print .cap b{font-size:40px}
+.life-finale{position:absolute;left:0;right:0;bottom:7%;text-align:center;z-index:45;opacity:0;transform:translateY(10px);transition:opacity .8s .8s,transform .8s .8s;pointer-events:none}
+.life-finale b{display:block;font:400 clamp(30px,3vw,42px)/1 var(--script);color:var(--maroon)}
+.life-finale small{display:block;margin-top:8px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#111}
+.life-stage.fan~.life-finale,.life-stage.fan .life-finale{opacity:1;transform:none}
+.life-line{position:relative;list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr)}
+.life-line::before,.life-line .fill{content:"";position:absolute;left:calc(100%/12);right:calc(100%/12);top:9px;height:2px;background:var(--line)}
+.life-line .fill{background:var(--gold);right:auto;width:0;transition:width .9s var(--ease)}
+.life-line button{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;cursor:pointer;color:#111}
+.life-line .nd{width:20px;height:20px;border-radius:50%;background:var(--paper);border:2px solid var(--line);transition:.4s;position:relative;z-index:1}
+.life-line .lb{font:500 10.5px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;text-align:center;opacity:.65;transition:opacity .3s}
+.life-line li.done .nd{border-color:var(--gold);background:var(--gold)}
+.life-line li.cur .nd{border-color:var(--maroon);background:var(--maroon);box-shadow:0 0 0 5px rgba(91,26,30,.15)}
+.life-line li.cur .lb,.life-line button:hover .lb{opacity:1;color:var(--maroon)}
+@media (max-width:520px){.life-line .lb{font-size:9px;letter-spacing:.04em}.print{padding-bottom:60px}.print .cap b{font-size:26px}.life-chapter{min-width:76px;padding:10px 12px}.life-chapter b{font-size:30px}}
+.about-copy .h2{margin-bottom:26px}
+.about-copy p{color:#111;font-weight:400;max-width:54ch;margin:0 0 16px}
+.about-quote{position:relative;margin:28px 0;padding:22px 26px 22px 64px;background:var(--paper-2);border-left:3px solid var(--gold);font:italic 500 clamp(21px,1.9vw,26px)/1.35 var(--display);color:#111}
+.about-quote::before{content:"“";position:absolute;left:18px;top:6px;font:400 70px/1 var(--script);color:var(--gold)}
+.offer{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px;padding:0;list-style:none}
+.offer li{display:flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--line);background:#fff;font:500 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#111}
+.offer svg{width:16px;height:16px;color:var(--gold)}
+.sign{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:34px}
+.sign p{margin:0;font:400 38px/1 var(--script);color:var(--maroon)}
+.sign small{display:block;font:500 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#111;opacity:.7;margin-top:8px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .stats>div{padding:28px 20px 26px;text-align:center;position:relative}
 .stats>div+div::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:linear-gradient(transparent,var(--gold),transparent)}
@@ -155,7 +211,7 @@ section{padding:clamp(80px,10vw,140px) 0}
 .stats span::before{content:"";display:block;width:22px;height:1px;background:var(--gold);margin:0 auto 12px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stats b{color:var(--gold-lt)}}
 @media (max-width:520px){.stats{grid-template-columns:1fr}.stats>div+div::before{left:22%;right:22%;top:0;bottom:auto;width:auto;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}}
-@media (max-width:900px){.intro .wrap{grid-template-columns:1fr}.intro-photos{max-width:560px}}
+@media (max-width:980px){.intro .wrap{grid-template-columns:1fr}.life{max-width:560px;width:100%;margin:0 auto}}
 
 /* ================= CEREMONIES ================= */
 .ceremonies{background:var(--paper-2)}
@@ -169,7 +225,7 @@ section{padding:clamp(80px,10vw,140px) 0}
 .tile:hover::after{background:linear-gradient(0deg,rgba(91,26,30,.92) 0%,rgba(26,8,9,.4) 60%,rgba(26,8,9,.1) 100%)}
 .tile .body{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:clamp(20px,2.4vw,34px)}
 .tile .num{position:absolute;z-index:2;top:20px;left:clamp(20px,2.4vw,34px);font:400 26px var(--script);color:var(--gold-lt)}
-.tile .ml{display:block;font-size:14px;color:var(--gold-lt);margin-bottom:4px}
+.tile .ml{display:block;font:400 24px/1 var(--script);color:var(--gold-lt);margin-bottom:6px}
 .tile h3{font:500 clamp(30px,2.7vw,42px)/1.05 var(--display);margin:0}
 .tile p{margin:0;max-height:0;opacity:0;overflow:hidden;font-size:14px;color:rgba(255,255,255,.88);transition:max-height .5s var(--ease),opacity .4s,margin .4s}
 .tile .more{display:inline-flex;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;margin-top:14px;padding-bottom:4px;border-bottom:1px solid var(--gold-lt)}
@@ -192,7 +248,7 @@ section{padding:clamp(80px,10vw,140px) 0}
 .drawer .dimg img{width:100%;height:100%;object-fit:cover}
 .drawer .close{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:16px;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#241615;cursor:pointer;font-size:22px;z-index:2}
 .drawer .dbody{padding:40px clamp(24px,5vw,52px) 52px}
-.drawer .ml{color:var(--gold);font-size:17px}
+.drawer .ml{font:400 30px/1 var(--script);color:var(--gold)}
 .drawer h3{font:500 clamp(44px,5.4vw,64px)/1 var(--display);margin:6px 0 20px}
 .drawer .desc{color:var(--muted);margin:0 0 32px}
 .drawer h4{font:400 28px var(--script);color:var(--gold);margin:0 0 10px}
@@ -454,7 +510,21 @@ form.enquiry{display:grid;grid-template-columns:1fr 1fr;gap:22px 20px;align-cont
 .form-note{grid-column:1/-1;font-size:13px;color:#111;opacity:.7;margin:0;text-align:center}
 .form-error{grid-column:1/-1;font-size:14px;color:#A3242A;margin:0;display:none}
 .inv-seal{position:absolute;left:50%;bottom:-38px;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8A2A30,var(--maroon) 60%,#3A0F12);display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.4),inset 0 0 0 3px rgba(220,192,138,.5);z-index:2}
-.inv-seal span{font:700 26px/1 var(--ml);color:var(--gold-lt)}
+.inv-seal{width:96px!important;height:96px!important;bottom:-48px!important}
+.inv-seal .ring{width:72px;height:72px;overflow:visible;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+.inv-seal .sparkles path{transform-box:fill-box;transform-origin:center;opacity:.9}
+.inv-seal .glint{opacity:0;transform-box:fill-box}
+@media (prefers-reduced-motion:no-preference){
+  .inv-seal .sparkles path{opacity:0}
+  .inv-seal .sparkles .sp1{animation:twk 2.4s ease-in-out infinite}
+  .inv-seal .sparkles .sp2{animation:twk 2.4s .8s ease-in-out infinite}
+  .inv-seal .sparkles .sp3{animation:twk 2.4s 1.6s ease-in-out infinite}
+  @keyframes twk{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1.25) rotate(45deg)}}
+  .inv-seal .gem{animation:gemglow 3s ease-in-out infinite}
+  @keyframes gemglow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,255,255,.6))}50%{filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px rgba(190,225,255,.9))}}
+  .inv-seal .glint{animation:glint 3.5s 1s ease-in-out infinite}
+  @keyframes glint{0%,55%{opacity:0;transform:translateX(0) skewX(-20deg)}65%{opacity:.85}85%{opacity:0;transform:translateX(26px) skewX(-20deg)}100%{opacity:0}}
+}
 @media (max-width:980px){.invite-grid{grid-template-columns:1fr}.divider{width:auto;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}}
 @media (max-width:560px){form.enquiry{grid-template-columns:1fr}.orn{width:52px;height:52px}.std .day{width:88px}.std .day b{font-size:42px}}
 
@@ -497,7 +567,6 @@ function logoFallback(img){
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.7 11.8 11.8 0 004.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 001.8-1.2 2.2 2.2 0 00.1-1.3c0-.1-.2-.2-.5-.3z"/></symbol>
   <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zM17.3 5.5a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4zM12 2c-2.7 0-3 0-4.1.1C4.3 2.2 2.2 4.3 2.1 7.9 2 9 2 9.3 2 12s0 3 .1 4.1c.1 3.6 2.2 5.7 5.8 5.8 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.1 5.7-2.2 5.8-5.8.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.1-3.6-2.2-5.7-5.8-5.8C15 2 14.7 2 12 2zm0 1.8c2.7 0 3 0 4 .1 2.7.1 4 1.4 4.1 4.1.1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.7-1.4 4-4.1 4.1-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.7-.1-4-1.4-4.1-4.1-.1-1-.1-1.3-.1-4s0-3 .1-4C4 5.3 5.3 4 8 3.9c1-.1 1.3-.1 4-.1z"/></symbol>
   <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8V6.3c0-.8.2-1.3 1.4-1.3H17V2h-2.5C11.5 2 10.5 3.5 10.5 6v2H8v3h2.5v11H14V11h2.6l.4-3z"/></symbol>
-  <symbol id="i-in" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2 3.77-2 4.03 0 4.77 2.6 4.77 6V21h-4v-5c0-1.2 0-2.75-1.7-2.75s-1.95 1.3-1.95 2.65V21H9.5z"/></symbol>
   <symbol id="i-ph" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1z"/></symbol>
   <symbol id="i-ml" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></symbol>
 </svg>
@@ -515,7 +584,6 @@ function logoFallback(img){
       <span class="social">
         <a href="https://www.instagram.com/chayamughi.nam" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
         <a href="https://www.facebook.com/chayamughi" target="_blank" rel="noopener" aria-label="Facebook"><svg><use href="#i-fb"/></svg></a>
-        <a href="https://www.linkedin.com/company/chayamughi/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a>
       </span>
     </div>
   </div>
@@ -576,33 +644,48 @@ function logoFallback(img){
   </div>
   <nav class="hero-index" aria-label="Ceremonies">
     <ul class="wrap" style="width:min(1280px,100%)">
-      <li><a href="#ceremonies" data-open="engagement"><span class="t">Engagement</span><span class="m" lang="ml">നിശ്ചയം</span></a></li>
-      <li><a href="#ceremonies" data-open="wedding"><span class="t">Wedding</span><span class="m" lang="ml">കല്യാണം</span></a></li>
-      <li><a href="#ceremonies" data-open="pre"><span class="t">Haldi</span><span class="m" lang="ml">ഹൽദി</span></a></li>
-      <li><a href="#ceremonies" data-open="post"><span class="t">Post wedding</span><span class="m" lang="ml">സൽക്കാരം</span></a></li>
-      <li><a href="#ceremonies" data-open="pirannal"><span class="t">Pirannal</span><span class="m" lang="ml">പിറന്നാൾ</span></a></li>
-      <li><a href="#ceremonies" data-open="upanayanam"><span class="t">Upanayanam</span><span class="m" lang="ml">ഉപനയനം</span></a></li>
+      <li><a href="#ceremonies" data-open="engagement"><span class="t">Engagement</span><span class="m">The ring ceremony</span></a></li>
+      <li><a href="#ceremonies" data-open="wedding"><span class="t">Wedding</span><span class="m">The big day</span></a></li>
+      <li><a href="#ceremonies" data-open="pre"><span class="t">Haldi</span><span class="m">Before the wedding</span></a></li>
+      <li><a href="#ceremonies" data-open="post"><span class="t">Post wedding</span><span class="m">The reception</span></a></li>
+      <li><a href="#ceremonies" data-open="pirannal"><span class="t">Pirannal</span><span class="m">Star birthday</span></a></li>
+      <li><a href="#ceremonies" data-open="upanayanam"><span class="t">Upanayanam</span><span class="m">Sacred thread</span></a></li>
     </ul>
   </nav>
 </section>
 
 <!-- ================= INTRO ================= -->
 <section class="intro" id="about">
+  <div class="bigword" aria-hidden="true">Storytellers</div>
   <div class="wrap">
-    <div class="intro-photos">
-      <div class="p1"><img src="https://chayamughi.in/assets1/images/gallery/binu-manaswini-2.jpg" alt="A traditional Hindu wedding photographed by Chayamughi" loading="lazy"></div>
-      <div class="p2"><img src="https://chayamughi.in/assets1/images/gallery/people-1.jpg" alt="Candid portrait by Chayamughi" loading="lazy"></div>
-      <div class="badge"><b>20+</b><span>years photographing Kerala’s ceremonies</span></div>
+    <div class="life" id="life" aria-label="A life in frames: from first birthday to wedding">
+      <div class="life-stage" id="lifeStage">
+        <div class="life-sway" id="lifeSway"></div>
+        <div class="life-chapter" aria-live="polite"><small>Chapter</small><b id="lifeNum">01</b><span>of 06</span></div>
+        <div class="life-finale"><b>Every chapter, one family</b><small>Captured by Chayamughi</small></div>
+        <div class="life-flash"></div>
+      </div>
+      <ol class="life-line" id="lifeLine"><span class="fill" id="lifeFill"></span></ol>
     </div>
-    <div>
+    <div class="about-copy">
       <div class="kicker">About Chayamughi</div>
       <h2 class="h2">We’re not just photographers. We’re <em>storytellers.</em></h2>
-      <p style="margin-top:28px">Chayamughi is a team of photographers, cinematographers and editors who believe a photograph should hold the feeling of the moment, not just its likeness. We work with each family to shape coverage around their own day.</p>
-      <p>From Kochi to Bengaluru, we’ve travelled across South India to capture the beauty of every region and every ritual.</p>
+      <p>Chayamughi is a team of photographers, cinematographers and editors who believe a photograph should hold the feeling of the moment, not just its likeness. We work with each family to shape coverage around their own day.</p>
+      <blockquote class="about-quote">From Kochi to Bengaluru, we’ve travelled across South India to capture the beauty of every region and every ritual.</blockquote>
+      <ul class="offer">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="4"/></svg>Photography</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="13" height="12" rx="1"/><path d="M16 10l5-3v10l-5-3"/></svg>Cinematography</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Theme music</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h12a4 4 0 014 4v12H8a4 4 0 01-4-4z"/><path d="M8 4v16"/></svg>Photobooks</li>
+      </ul>
       <div class="stats">
         <div><b>500–1,000</b><span>Edited photos per day</span></div>
         <div><b>3–4</b><span>Crew at every event</span></div>
         <div><b>1–2<small>weeks</small></b><span>To your digital gallery</span></div>
+      </div>
+      <div class="sign">
+        <div><p>Team Chayamughi</p><small>Perinthalmanna, Kerala</small></div>
+        <a class="btn btn-dark" href="#ceremonies">Explore ceremonies</a>
       </div>
     </div>
   </div>
@@ -760,7 +843,7 @@ function logoFallback(img){
             <div class="info"><small>Your ceremony</small><strong id="stdCer">Wedding</strong><em id="stdFull">Pick a date to save it</em></div>
           </div>
           <ul class="reach">
-            <li><a href="tel:+919746661515"><span class="ico"><svg><use href="#i-ph"/></svg></span><span class="rtx"><small>Call</small><span>+91 97466 61515 · +91 98462 67843</span></span></a></li>
+            <li><a href="tel:+919746661515"><span class="ico"><svg><use href="#i-ph"/></svg></span><span class="rtx"><small>Call</small><span>+91 97466 61515</span></span></a></li>
             <li><a href="https://wa.me/919746661515" target="_blank" rel="noopener"><span class="ico wa"><svg><use href="#i-wa"/></svg></span><span class="rtx"><small>WhatsApp</small><span>Chat with us</span></span></a></li>
             <li><a href="mailto:chayamughi.in@gmail.com"><span class="ico"><svg><use href="#i-ml"/></svg></span><span class="rtx"><small>Email</small><span>chayamughi.in@gmail.com</span></span></a></li>
             <li><div><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg></span><span class="rtx"><small>Studio · Mon–Sat, 8 am–6 pm</small><span>Perinthalmanna, Malappuram, Kerala</span></span></div></li>
@@ -770,7 +853,7 @@ function logoFallback(img){
         <form class="enquiry" id="enquiry" novalidate>
           <div style="grid-column:1/-1"><p class="inv-script">Check your date</p><h3 class="inv-title" style="margin-bottom:6px">Tell us about your ceremony</h3></div>
           <p class="chips-label" id="chipsLbl">Which ceremony?</p>
-          <fieldset class="chips" aria-labelledby="chipsLbl"><label class="chip"><input type="radio" name="cer" value="Engagement"><span>Engagement<i lang="ml">നിശ്ചയം</i></span></label><label class="chip"><input type="radio" name="cer" value="Wedding" checked><span>Wedding<i lang="ml">കല്യാണം</i></span></label><label class="chip"><input type="radio" name="cer" value="Pre-wedding (Haldi / Bride to be)"><span>Haldi<i lang="ml">ഹൽദി</i></span></label><label class="chip"><input type="radio" name="cer" value="Post wedding"><span>Post wedding<i lang="ml">സൽക്കാരം</i></span></label><label class="chip"><input type="radio" name="cer" value="Pirannal"><span>Pirannal<i lang="ml">പിറന്നാൾ</i></span></label><label class="chip"><input type="radio" name="cer" value="Upanayanam"><span>Upanayanam<i lang="ml">ഉപനയനം</i></span></label></fieldset>
+          <fieldset class="chips" aria-labelledby="chipsLbl"><label class="chip"><input type="radio" name="cer" value="Engagement"><span>Engagement</span></label><label class="chip"><input type="radio" name="cer" value="Wedding" checked><span>Wedding</span></label><label class="chip"><input type="radio" name="cer" value="Pre-wedding (Haldi / Bride to be)"><span>Haldi</span></label><label class="chip"><input type="radio" name="cer" value="Post wedding"><span>Post wedding</span></label><label class="chip"><input type="radio" name="cer" value="Pirannal"><span>Pirannal</span></label><label class="chip"><input type="radio" name="cer" value="Upanayanam"><span>Upanayanam</span></label></fieldset>
           <div class="field"><label for="fName">Your name</label><input id="fName" required autocomplete="name"></div>
           <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" required autocomplete="tel"></div>
           <div class="field"><label for="fDate">Event date</label><input id="fDate" type="date"></div>
@@ -784,7 +867,29 @@ function logoFallback(img){
           <p class="form-note">Your message opens in WhatsApp or your email app, ready to send.</p>
         </form>
       </div>
-      <div class="inv-seal" aria-hidden="true"><span lang="ml">ഛ</span></div>
+      <div class="inv-seal" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 80 80">
+          <defs>
+            <linearGradient id="band" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1C4"/><stop offset=".35" stop-color="#E2B95C"/><stop offset=".65" stop-color="#A97C25"/><stop offset="1" stop-color="#F3D58C"/></linearGradient>
+            <linearGradient id="gem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#DDEFFF"/><stop offset="1" stop-color="#9EC6E8"/></linearGradient>
+            <clipPath id="gemclip"><path d="M30 22l5-7h10l5 7-10 13z"/></clipPath>
+          </defs>
+          <ellipse cx="40" cy="52" rx="19" ry="17" fill="none" stroke="url(#band)" stroke-width="5"/>
+          <ellipse cx="40" cy="52" rx="19" ry="17" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-dasharray="14 90" stroke-dashoffset="-6"/>
+          <path d="M33 37l3-5h8l3 5-7 3z" fill="url(#band)"/>
+          <g class="gem">
+            <path d="M30 22l5-7h10l5 7-10 13z" fill="url(#gem)" stroke="#fff" stroke-width=".8"/>
+            <path d="M30 22h20M35 15l5 7 5-7M35 22l5 13 5-13" fill="none" stroke="#9EC6E8" stroke-width=".7"/>
+            <path d="M36 16l-3 5" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            <g clip-path="url(#gemclip)"><rect class="glint" x="22" y="10" width="6" height="30" fill="#fff"/></g>
+          </g>
+          <g class="sparkles" fill="#fff">
+            <path class="sp1" d="M55 12l1.2 3.3 3.3 1.2-3.3 1.2L55 21l-1.2-3.3-3.3-1.2 3.3-1.2z"/>
+            <path class="sp2" d="M24 10l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/>
+            <path class="sp3" d="M60 30l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>
+          </g>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
@@ -800,7 +905,6 @@ function logoFallback(img){
         <div class="foot-social">
           <a href="https://www.instagram.com/chayamughi.nam" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
           <a href="https://www.facebook.com/chayamughi" target="_blank" rel="noopener" aria-label="Facebook"><svg><use href="#i-fb"/></svg></a>
-          <a href="https://www.linkedin.com/company/chayamughi/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a>
           <a href="https://wa.me/919746661515" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
         </div>
       </div>
@@ -813,8 +917,7 @@ function logoFallback(img){
       <div><h4>Follow</h4><ul>
         <li><a href="https://www.instagram.com/chayamughi.nam" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://www.facebook.com/chayamughi" target="_blank" rel="noopener">Facebook</a></li>
-        <li><a href="https://www.linkedin.com/company/chayamughi/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://twitter.com/chayamughi" target="_blank" rel="noopener">X (Twitter)</a></li></ul></div>
+</ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> Chayamughi. All rights reserved.</span><span>Perinthalmanna, Kerala, India</span></div>
   </div>
@@ -827,7 +930,7 @@ function logoFallback(img){
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true">
   <div class="dimg"><img id="dImg" src="" alt=""><button class="close" id="dClose" aria-label="Close">×</button></div>
   <div class="dbody">
-    <span class="ml" id="dMl" lang="ml"></span>
+    <span class="ml" id="dMl"></span>
     <h3 id="dTitle"></h3>
     <p class="desc" id="dDesc"></p>
     <h4>What we capture</h4>
@@ -843,27 +946,27 @@ function logoFallback(img){
 const IMG='https://chayamughi.in/assets1/images/gallery/';
 /* ---- Ceremonies ---- */
 const CER=[
- {id:'wedding',cls:'t-wedding',t:'Wedding',ml:'കല്യാണം',img:'wedding.jpg',fb:'#4A1A1C',form:'Wedding',
+ {id:'wedding',cls:'t-wedding',t:'Wedding',ml:'The big day',img:'wedding.jpg',fb:'#4A1A1C',form:'Wedding',
   s:'The thali, the kasavu and the glow of the nilavilakku, captured in photographs and cinematic film.',
   d:'Your wedding is the centre of the story. Our photographers and cinematographers work together through every ritual, from the bride’s arrival to the last blessing, while our composer creates a theme score for your film.',
   i:['Full-day photography and cinematic film','Custom wedding theme music','Traditional and candid coverage','Premium printed photobook','500–1,000 edited photographs per day']},
- {id:'engagement',cls:'t-engagement',t:'Engagement',ml:'നിശ്ചയം',img:'engagement.jpg',fb:'#5B1A1E',form:'Engagement',
+ {id:'engagement',cls:'t-engagement',t:'Engagement',ml:'The ring ceremony',img:'engagement.jpg',fb:'#5B1A1E',form:'Engagement',
   s:'The ring exchange, the families’ blessings and your first portraits together.',
   d:'The day two families formally come together. We cover the ceremony and the gathering, and set aside time for your first portraits as a couple.',
   i:['Ring exchange and ceremony','Family and elders’ blessings','Couple portraits','Highlight film']},
- {id:'pre',cls:'t-pre',t:'Haldi / Bride to be',ml:'ഹൽദി',img:'ban4.jpg',fb:'#8A5A12',form:'Pre-wedding (Haldi / Bride to be)',
+ {id:'pre',cls:'t-pre',t:'Haldi / Bride to be',ml:'Before the wedding',img:'ban4.jpg',fb:'#8A5A12',form:'Pre-wedding (Haldi / Bride to be)',
   s:'Turmeric, mehendi and laughter in the days before.',
   d:'The joyful, colourful days before the wedding. We photograph the haldi and mehendi at home, and plan bride-to-be sessions with suggestions for locations and attire.',
   i:['Haldi and mehendi ceremonies','Bride-to-be portrait session','Outdoor location suggestions','Attire and colour guidance']},
- {id:'post',cls:'t-post',t:'Post wedding',ml:'സൽക്കാരം',img:'thara-saranug-2.jpg',fb:'#3A2A22',form:'Post wedding',
+ {id:'post',cls:'t-post',t:'Post wedding',ml:'The reception',img:'thara-saranug-2.jpg',fb:'#3A2A22',form:'Post wedding',
   s:'The reception and a relaxed couple session after the rush.',
   d:'Once the rituals are over, there’s time to breathe. We cover the reception and plan an unhurried outdoor shoot for the photographs you didn’t have time for on the day.',
   i:['Reception coverage','Outdoor couple session','Family portraits','Post-wedding film']},
- {id:'pirannal',cls:'t-pirannal',t:'Pirannal',ml:'പിറന്നാൾ',img:'aadhi-4.jpg',fb:'#2F3E46',form:'Pirannal',
+ {id:'pirannal',cls:'t-pirannal',t:'Pirannal',ml:'Star birthday',img:'aadhi-4.jpg',fb:'#2F3E46',form:'Pirannal',
   s:'A birthday by the star, with the sadya and the little one at the centre.',
   d:'Children don’t pose on cue, so we take our time. We stay through the rituals, the sadya and the play, waiting for the candid moments that make the day.',
   i:['Rituals and blessings','Candid children’s photography','Sadya and family gathering','Family portraits']},
- {id:'upanayanam',cls:'t-upanayanam',t:'Upanayanam',ml:'ഉപനയനം',img:'chayamughi-blog-9.jpg',fb:'#3A1214',form:'Upanayanam',
+ {id:'upanayanam',cls:'t-upanayanam',t:'Upanayanam',ml:'Sacred thread',img:'chayamughi-blog-9.jpg',fb:'#3A1214',form:'Upanayanam',
   s:'The sacred thread ceremony, documented ritual by ritual.',
   d:'A ceremony rich in meaning and detail. Our team understands the sequence of rituals, so the homam, the priest’s guidance and every blessing are recorded in full.',
   i:['Complete ritual documentation','Homam and sacred thread rites','Elders and family portraits','Ceremony film']}
@@ -874,7 +977,7 @@ CER.forEach((c,n)=>{
   b.className='tile '+c.cls;b.style.setProperty('--fallback',c.fb);b.dataset.id=c.id;
   b.innerHTML=`<img src="${IMG+c.img}" alt="" loading="lazy" onerror="this.remove()">
   <span class="num">${String(n+1).padStart(2,'0')}</span>
-  <span class="body"><span class="ml" lang="ml">${c.ml}</span><h3>${c.t}</h3><p>${c.s}</p><span class="more">View details</span></span>`;
+  <span class="body"><span class="ml">${c.ml}</span><h3>${c.t}</h3><p>${c.s}</p><span class="more">View details</span></span>`;
   b.addEventListener('click',()=>openDrawer(c.id,b));
   bento.appendChild(b);
 });
@@ -945,6 +1048,52 @@ document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e
   new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)resume();}),{threshold:0}).observe(sec);
   sec.addEventListener('mouseleave',resume);
   show(0);restart();
+})();
+
+
+
+/* ---- About: a life in frames, from first birthday to wedding ---- */
+(function(){
+  const L=[
+   {k:'Pirannal',t:'The first birthday',img:'aadhi-4.jpg',fb:'#2F3E46',r:-4,x:'-6px'},
+   {k:'Upanayanam',t:'The sacred thread',img:'chayamughi-blog-9.jpg',fb:'#5A2A10',r:3,x:'8px'},
+   {k:'Engagement',t:'The promise',img:'engagement.jpg',fb:'#5B1A1E',r:-2,x:'-10px'},
+   {k:'Haldi',t:'Days of turmeric',img:'ban4.jpg',fb:'#8A5A12',r:5,x:'6px'},
+   {k:'Wedding',t:'The big day',img:'wedding.jpg',fb:'#4A1A1C',r:-3,x:'-4px'},
+   {k:'Post wedding',t:'Forever begins',img:'thara-saranug-2.jpg',fb:'#3A2A22',r:2,x:'10px'}
+  ];
+  const life=document.getElementById('life');if(!life)return;
+  const stage=document.getElementById('lifeStage'),sway=document.getElementById('lifeSway'),line=document.getElementById('lifeLine');
+  const prints=L.map((c,i)=>{const p=document.createElement('figure');p.className='print';p.style.cssText=`--r:${c.r}deg;--x:${c.x};--i:${i};--fb:${c.fb};z-index:${i+1}`;
+    p.innerHTML=`<div class="ph"><img src="${IMG+c.img}" alt="${c.k} photographed by Chayamughi" loading="lazy" onerror="this.remove()"></div><figcaption class="cap"><b>${c.t}</b><small>${c.k}</small></figcaption>`;
+    sway.appendChild(p);
+    const li=document.createElement('li');li.innerHTML=`<button aria-label="Chapter ${i+1}: ${c.k}"><span class="nd"></span><span class="lb">${c.k}</span></button>`;
+    li.querySelector('button').onclick=()=>{go(i);schedule();};line.appendChild(li);return p;});
+  const nodes=[...line.querySelectorAll('li')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur=-1,timer=null,visible=false;
+  function go(i){
+    stage.classList.remove('fan');cur=i;
+    prints.forEach((p,j)=>{p.classList.remove('now','past','far');
+      if(j<i){p.classList.add('past');if(i-j>3)p.classList.add('far');}
+      else if(j===i){void p.offsetWidth;p.classList.add('now');}});
+    nodes.forEach((n,j)=>{n.classList.toggle('done',j<i);n.classList.toggle('cur',j===i);});
+    document.getElementById('lifeFill').style.width=`calc(${i/(L.length-1)} * (100% - 100%/6))`;
+    document.getElementById('lifeNum').textContent='0'+(i+1);
+    life.classList.remove('snap');void life.offsetWidth;life.classList.add('snap');
+  }
+  function fan(){stage.classList.add('fan');nodes.forEach(n=>{n.classList.add('done');n.classList.remove('cur');});}
+  function step(){
+    if(!visible)return;
+    if(stage.classList.contains('fan')){go(0);}
+    else if(cur<L.length-1){go(cur+1);}
+    else{fan();clearTimeout(timer);timer=setTimeout(step,5200);return;}
+    schedule();
+  }
+  function schedule(){clearTimeout(timer);if(!reduce)timer=setTimeout(step,cur===L.length-1?4200:3600);}
+  new IntersectionObserver(es=>es.forEach(e=>{visible=e.isIntersecting;
+    if(visible){if(cur<0)go(0);schedule();}else clearTimeout(timer);}),{threshold:.3}).observe(life);
+  if(reduce)go(0);
 })();
 
 /* ---- Hero slideshow ---- */
